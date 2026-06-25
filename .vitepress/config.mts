@@ -4,32 +4,32 @@ import {withMermaid} from 'vitepress-plugin-mermaid'
 /** 周报时间轴：按周倒序，首页默认跳转最新有内容的周报 */
 const weeks = [
     {
-        id: '2026-06-23',
-        label: '2026-06-23 ~ 06-29',
+        id: '2026-06-22',
+        label: '2026-06-22 ~ 06-28',
         title: '本周',
         hasContent: true,
     },
     {
-        id: '2026-06-16',
-        label: '2026-06-16 ~ 06-22',
+        id: '2026-06-15',
+        label: '2026-06-15 ~ 06-21',
         title: '上一周',
         hasContent: true,
     },
     {
-        id: '2026-06-09',
-        label: '2026-06-09 ~ 06-15',
+        id: '2026-06-08',
+        label: '2026-06-08 ~ 06-14',
         title: '上两周',
         hasContent: true,
     },
     {
-        id: '2026-06-02',
-        label: '2026-06-02 ~ 06-08',
+        id: '2026-06-01',
+        label: '2026-06-01 ~ 06-07',
         title: '上三周',
         hasContent: true,
     },
     {
-        id: '2026-05-26',
-        label: '2026-05-26 ~ 06-01',
+        id: '2026-05-25',
+        label: '2026-05-25 ~ 05-31',
         title: '上四周',
         hasContent: true,
     },
