@@ -1,0 +1,4 @@
+/* 周报正文图片：悬停显示可放大光标 */
+.vp-doc img {
+    cursor: zoom-in;
+}
