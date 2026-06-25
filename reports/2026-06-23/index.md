@@ -6,6 +6,8 @@
 
 ::: info 待补充
 本周工作内容尚未录入。请在下方编辑本页，或将截图放入 `./images/` 目录后更新对应章节。
+
+**技术栈参考：** 前端改动标注 **TypeScript · chat_vue3**，后端/智能体改动标注 **Python · agent_python**，网关改动标注 **TypeScript · gateway_node**。
 :::
 
 ## 工作项模板
@@ -16,6 +18,7 @@
 
 **背景：**  
 **完成内容：**  
+**技术栈：** TypeScript / Python（择一或组合）  
 **成果 / 指标：**
 
 ```mermaid

@@ -20,6 +20,9 @@ features:
   - icon: 📊
     title: 架构可视化
     details: 内置 Mermaid 流程图与架构图，关键改动一目了然。
+  - icon: 🛠️
+    title: 双栈协同
+    details: TypeScript 前端与 Python 智能体后端分工清晰，网关 TypeScript 统一透传。
   - icon: 🖼️
     title: 截图归档
     details: 每周独立 images 文件夹，便于补充界面截图与演示素材。

@@ -6,17 +6,17 @@
 
 ## 本周概览
 
-| 维度 | 关键词 |
-|------|--------|
-| 工程化 | Vue/CLI → Vite，构建效率 +90% |
-| AI 智能体 | 财务 / 市场洞察 / 调价 V1 |
-| 安全架构 | 公网 IP → 内网调用 |
+| 维度 | 关键词 | 技术栈 |
+|------|--------|--------|
+| 工程化 | Vue/CLI → Vite，构建效率 +90% | TypeScript · chat_vue3 |
+| AI 智能体 | 财务 / 市场洞察 / 调价 V1 | Python · agent_python |
+| 安全架构 | 公网 IP → 内网调用 | TypeScript + Python 全链路 |
 
 ---
 
 ## 1. Web 前端架构工程升级
 
-完成项目底层架构从 **Vue CLI** 迁移至 **Vite** 构建体系，完成工程化底层换代，大幅提升研发与部署效率。
+完成 **chat_vue3（TypeScript）** 底层架构从 **Vue CLI** 迁移至 **Vite** 构建体系，完成工程化底层换代，大幅提升研发与部署效率。
 
 ### 性能对比
 
@@ -46,13 +46,13 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    subgraph dev_env ["开发态"]
-        SRC["源码"] --> ViteDev["Vite Dev Server"]
+    subgraph dev_env ["开发态 TypeScript"]
+        SRC["TS 源码"] --> ViteDev["Vite Dev Server"]
         ViteDev --> HMR["热更新"]
     end
 
-    subgraph prod_env ["生产态"]
-        SRC2["源码"] --> Build["Vite Build"]
+    subgraph prod_env ["生产态 TypeScript"]
+        SRC2["TS 源码"] --> Build["Vite Build"]
         Build --> Dist["静态资源"]
         Dist --> CDN["Nginx CDN"]
     end
@@ -60,8 +60,8 @@ flowchart LR
 
 **收益：**
 
-- 研发等待成本显著降低，迭代交付更快
-- 与现代前端生态（TypeScript、组件库）更好兼容
+- 研发等待成本显著降低，TypeScript 类型检查与 Vite 热更新协同提效
+- 与现代前端生态（TypeScript、Vue3 组件库）更好兼容
 - 为后续微前端 / 多项目 Monorepo 扩展预留空间
 
 > 📷 截图占位：`./images/vite-build-perf.png`、`./images/vite-dev-startup.png`
@@ -70,17 +70,17 @@ flowchart LR
 
 ## 2. 多类 AI 智能体能力工程化落地
 
-持续推进多业务智能体接入与交互工程优化，拓展平台 AI 业务场景覆盖。
+持续推进 **agent_python（Python）** 多业务智能体接入，配合 **chat_vue3（TypeScript）** 交互工程优化，拓展平台 AI 业务场景覆盖。
 
 ### 2.1 财务智能体 · 流式图片渲染
 
-优化财务智能体 **流式图片渲染逻辑**，提升大模型多媒体输出展示稳定性与视觉体验。
+优化 Python 侧财务智能体 **流式图片渲染逻辑**，TypeScript 前端渐进渲染多媒体块，提升大模型输出展示稳定性。
 
 ```mermaid
 sequenceDiagram
     participant LLM as 大模型
-    participant AG as 财务智能体
-    participant FE as 前端
+    participant AG as 财务智能体 Python
+    participant FE as chat_vue3 TypeScript
 
     LLM-->>AG: 流式返回含图片块
     AG-->>FE: SSE 事件序列
@@ -90,7 +90,7 @@ sequenceDiagram
 
 ### 2.2 市场洞察智能体 · 会话记忆与工具可视化
 
-完成市场洞察智能体集成，实现：
+完成市场洞察智能体 **Python 服务** 集成，TypeScript 前端实现工具调用可视化面板：
 
 - 基于 **会话 ID** 的持续记忆能力
 - **可视化展示工具调用全过程**，让 AI 推理链路更透明、可追溯
@@ -98,30 +98,30 @@ sequenceDiagram
 ```mermaid
 flowchart TB
     User["用户提问"] --> Session["会话 ID 上下文"]
-    Session --> Agent["市场洞察智能体"]
+    Session --> Agent["市场洞察 Python"]
     Agent --> T1["工具调用 1"]
     Agent --> T2["工具调用 2"]
-    T1 --> Viz["前端可视化面板"]
+    T1 --> Viz["TypeScript 可视化面板"]
     T2 --> Viz
     Viz --> User
 ```
 
 ### 2.3 调价智能体 V1
 
-完成 **调价智能体 V1** 工程化接入，保障智能体内容正常、稳定渲染。
+完成 **调价智能体 V1（Python）** 工程化接入，保障 TypeScript 前端内容正常、稳定渲染。
 
-| 智能体 | 状态 | 核心能力 |
-|--------|------|----------|
-| 财务智能体 | 体验优化 | 流式图片渲染 |
-| 市场洞察 | 新接入 | 会话记忆 + 工具链可视化 |
-| 调价智能体 | V1 上线 | 稳定内容渲染 |
+| 智能体 | 状态 | 语言 | 核心能力 |
+|--------|------|------|----------|
+| 财务智能体 | 体验优化 | Python | 流式图片渲染 |
+| 市场洞察 | 新接入 | Python | 会话记忆 + 工具链可视化 |
+| 调价智能体 | V1 上线 | Python | 稳定内容渲染 |
 
 ```mermaid
 flowchart LR
-    GW["API Gateway"] --> F["财务"]
-    GW --> M["市场洞察"]
-    GW --> P["调价 V1"]
-    F --> FE["chat_vue3 前端"]
+    GW["gateway_node TypeScript"] --> F["财务 Python"]
+    GW --> M["市场洞察 Python"]
+    GW --> P["调价 V1 Python"]
+    F --> FE["chat_vue3 TypeScript"]
     M --> FE
     P --> FE
 ```
@@ -132,19 +132,19 @@ flowchart LR
 
 ## 3. 服务器安全架构整改
 
-完成服务器安全环境专项排查与架构优化，将原有 **所有公网 IP 调用链路** 全面整改为 **内网调用模式**。
+完成 TypeScript 网关与 Python 智能体服务的安全环境专项排查，将 **所有公网 IP 调用链路** 全面整改为 **内网调用模式**。
 
 ### 整改前后对比
 
 ```mermaid
 flowchart TB
     subgraph net_before ["整改前 存在风险"]
-        S1["业务服务"] -->|"公网 IP"| S2["依赖服务"]
+        S1["gateway_node TS"] -->|"公网 IP"| S2["agent_python"]
         S2 -->|"公网暴露"| Internet(("公网"))
     end
 
     subgraph net_after ["整改后 内网隔离"]
-        S3["业务服务"] -->|"内网 VPC"| S4["依赖服务"]
+        S3["gateway_node TS"] -->|"内网 VPC"| S4["agent_python"]
         S4 -.->|"禁止直连"| Internet2(("公网"))
     end
 ```

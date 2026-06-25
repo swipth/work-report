@@ -6,19 +6,19 @@
 
 ## 本周概览
 
-| 维度 | 关键词 |
-|------|--------|
-| 品牌统一 | 千寻 → 药石智能操作系统 |
-| 交互体验 | 「正在思考中」加载动画 |
-| 性能优化 | 会话列表 1.35s → 135ms |
-| 稳定性 | 网关熔断时长调优 |
-| 业务打磨 | 历史会话转接智能体 |
+| 维度 | 关键词 | 技术栈 |
+|------|--------|--------|
+| 品牌统一 | 千寻 → 药石智能操作系统 | TypeScript · chat_vue3 |
+| 交互体验 | 「正在思考中」加载动画 | TypeScript · SSE |
+| 性能优化 | 会话列表 1.35s → 135ms | Python · agent_python |
+| 稳定性 | 网关熔断时长调优 | TypeScript · gateway_node |
+| 业务打磨 | 历史会话转接智能体 | TypeScript + Python |
 
 ---
 
 ## 1. 页面文案整改
 
-完成千寻平台全站文案替换，统一更名为 **「药石智能操作系统」**，消除历史品牌残留，提升产品识别度与对内对外口径一致性。
+在 **chat_vue3（TypeScript）** 全站完成文案替换，统一更名为 **「药石智能操作系统」**，消除历史品牌残留。
 
 ```mermaid
 flowchart LR
@@ -33,13 +33,13 @@ flowchart LR
 
 ## 2. 前端交互优化
 
-优化智能体回复加载逻辑，新增 **「正在思考中」** 交互动画，降低用户等待焦虑，提升对话流式体验的可感知反馈。
+在 TypeScript 流式渲染逻辑中优化智能体回复加载，新增 **「正在思考中」** 交互动画，降低用户等待焦虑。
 
 ```mermaid
 sequenceDiagram
     participant U as 用户
-    participant F as 前端
-    participant A as 智能体服务
+    participant F as 前端 TypeScript
+    participant A as agent_python
 
     U->>F: 发送消息
     F->>F: 展示思考中动画
@@ -61,7 +61,7 @@ sequenceDiagram
 
 ## 3. API 接口性能提优
 
-优化 **会话列表查询接口**，通过索引与查询策略调整，接口耗时由 **1.35s 优化至 135ms**，查询效率提升约 **90%**。
+在 **agent_python（Python / FastAPI）** 侧优化会话列表查询接口，通过索引与查询策略调整，接口耗时由 **1.35s 优化至 135ms**，查询效率提升约 **90%**。
 
 | 指标 | 优化前 | 优化后 | 提升 |
 |------|--------|--------|------|
@@ -83,12 +83,12 @@ flowchart TB
 
 ## 4. 服务稳定性优化
 
-调大 **服务网关熔断时长**，规避超长 AI 推理请求触发熔断导致的服务中断，保障大模型长耗时场景下的链路可用性。
+调大 **gateway_node（TypeScript）** 服务网关熔断时长，规避超长 Python 智能体推理请求触发熔断导致的服务中断。
 
 ```mermaid
 flowchart LR
-    Client["客户端"] --> GW["API Gateway"]
-    GW -->|"熔断阈值上调"| Svc["智能体服务"]
+    Client["chat_vue3"] --> GW["gateway_node TypeScript"]
+    GW -->|"熔断阈值上调"| Svc["agent_python"]
     Svc -->|"长耗时推理"| GW
     GW --> Client
 ```
@@ -100,7 +100,7 @@ flowchart LR
 
 ## 5. 业务功能打磨
 
-优化 **历史会话转接智能体** 逻辑，修复边界场景下的上下文丢失与智能体切换异常，提升功能使用体验。
+优化 TypeScript 前端与 Python 后端协同的 **历史会话转接智能体** 逻辑，修复边界场景下的上下文丢失与智能体切换异常。
 
 ```mermaid
 stateDiagram-v2

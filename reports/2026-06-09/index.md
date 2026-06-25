@@ -6,13 +6,13 @@
 
 ## 本周概览
 
-| 维度 | 关键词 |
-|------|--------|
-| 标准化 | 智能体 API 文档、流式 API 设计 |
-| 中间件 | Ragflow 文转智答重构 |
-| 性能 | 响应 10.5s → 3s |
-| 运维 | 调度日志、ACR 镜像版本 |
-| 发版 | 千寻 V1.0.0-Beta |
+| 维度 | 关键词 | 技术栈 |
+|------|--------|--------|
+| 标准化 | 智能体 API 文档、流式 API 设计 | Python + TypeScript |
+| 中间件 | Ragflow 文转智答重构 | Python |
+| 性能 | 响应 10.5s → 3s | Python · agent_python |
+| 运维 | 调度日志、ACR 镜像版本 | Python |
+| 发版 | 千寻 V1.0.0-Beta | TypeScript · as_vue3 / as_nest |
 
 ---
 
@@ -20,15 +20,15 @@
 
 ### 1.1 智能体 API 对接文档
 
-编写 **智能体 API 对接文档** 供下游团队使用，统一接入规范、鉴权方式与错误码约定。
+编写 **智能体 API 对接文档** 供下游团队使用，覆盖 **Python（FastAPI）** 接口规范与 **TypeScript** 客户端调用示例，统一鉴权方式与错误码约定。
 
 ### 1.2 流式输出 API 设计
 
-设计 **流式输出 API** 标准，规范 SSE 事件格式、心跳与断线重连策略，为多智能体统一接入奠定基础。
+设计 **流式输出 API** 标准，规范 Python 侧 SSE 事件格式与 TypeScript 前端消费协议，明确心跳与断线重连策略。
 
 ### 1.3 文转智答（Ragflow 中间件）重构
 
-重构文转智答中间件结构，补充技术文档、搭建 **公共代码仓**，规范团队协作与代码复用。
+重构 **agent_python** 文转智答（Ragflow 中间件）结构，补充 Python 技术文档、搭建公共代码仓，规范团队协作与代码复用。
 
 ```mermaid
 flowchart TB
@@ -41,8 +41,8 @@ flowchart TB
     subgraph platform ["平台层"]
         DOC["API 对接文档"]
         STREAM["流式输出 API"]
-        RAG["Ragflow 中间件"]
-        REPO["公共代码仓"]
+        RAG["Ragflow Python 中间件"]
+        REPO["Python 公共代码仓"]
     end
 
     D1 --> DOC
@@ -63,7 +63,7 @@ flowchart TB
 
 ### 2.1 文转智答渐进式处理
 
-文转智答改为 **渐进式数据处理**，平均响应时长由 **10.5s 优化至约 3s**，用户可更早看到首段内容。
+在 **Python** 侧将文转智答改为 **渐进式数据处理**，平均响应时长由 **10.5s 优化至约 3s**，TypeScript 前端可更早渲染首段内容。
 
 | 阶段 | 优化前 | 优化后 |
 |------|--------|--------|
@@ -90,7 +90,7 @@ flowchart LR
 
 ### 3.1 智能体调度日志
 
-新增智能体调度 **入参、响应、异常** 全链路日志，实现问题快速溯源与故障定位。
+在 **agent_python** 新增智能体调度 **入参、响应、异常** 全链路日志（Python logging），实现问题快速溯源与故障定位。
 
 ```mermaid
 flowchart LR
@@ -118,7 +118,7 @@ flowchart LR
 
 ## 4. 体验与品牌优化
 
-- **经营问数**：调整展示逻辑、精简功能、统一页面主题
+- **经营问数**：调整 TypeScript 页面展示逻辑、精简功能、统一主题
 - **企业微信入口**：更新名称及 Logo，统一品牌标识
 
 ```mermaid
@@ -137,19 +137,21 @@ flowchart TB
 
 ## 5. Release 项目发版
 
-**千寻**（前后端分离架构）前后端项目同步发版，版本号 **V1.0.0-Beta**。
+**千寻** TypeScript 前后端项目同步发版，版本号 **V1.0.0-Beta**。
 
 ```mermaid
 flowchart LR
-    FE["前端 as_vue3"] -->|"V1.0.0-Beta"| REL["Release"]
-    BE["后端 as_nest"] -->|"V1.0.0-Beta"| REL
+    FE["as_vue3 TypeScript"] -->|"V1.0.0-Beta"| REL["Release"]
+    BE["as_nest TypeScript"] -->|"V1.0.0-Beta"| REL
+    AG["agent_python"] -->|"镜像同步"| REL
     REL --> DEPLOY["生产部署"]
 ```
 
-| 组件 | 版本 | 说明 |
-|------|------|------|
-| 前端 | V1.0.0-Beta | 前后端分离 |
-| 后端 | V1.0.0-Beta | API 同步发版 |
+| 组件 | 版本 | 语言 | 说明 |
+|------|------|------|------|
+| 前端 as_vue3 | V1.0.0-Beta | TypeScript | 前后端分离 |
+| 后端 as_nest | V1.0.0-Beta | TypeScript | API 同步发版 |
+| 智能体 agent_python | 同步 | Python | Docker 镜像 ACR 标记 |
 
 > 📷 截图占位：`./images/release-v1-beta.png`
 

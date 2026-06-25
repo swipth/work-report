@@ -6,21 +6,21 @@
 
 ## 本周概览
 
-| 维度 | 关键词 |
-|------|--------|
-| 视觉 | 站点主题 UI 精细化 |
-| 交互 | 链接新标签页打开 |
-| 功能 | 侧边栏状态记忆关闭 |
-| 适配 | PC 与移动端响应式 |
-| 体验 | 对话刷新防闪烁 |
-| 后端 | 智能体数据结构统一适配 |
-| 网关 | 用户与会话上下文透传 |
+| 维度 | 关键词 | 技术栈 |
+|------|--------|--------|
+| 视觉 | 站点主题 UI 精细化 | TypeScript · chat_vue3 |
+| 交互 | 链接新标签页打开 | TypeScript |
+| 功能 | 侧边栏状态记忆关闭 | TypeScript |
+| 适配 | PC 与移动端响应式 | TypeScript · Vue3 |
+| 体验 | 对话刷新防闪烁 | TypeScript |
+| 后端 | 智能体数据结构统一适配 | Python · agent_python |
+| 网关 | 用户与会话上下文透传 | TypeScript · gateway_node |
 
 ---
 
 ## 1. 界面样式优化
 
-迭代站点主题 **UI 展示效果**，精细化视觉呈现，提升整体页面美观度。
+迭代 **chat_vue3（TypeScript + Vue3）** 站点主题 UI 展示效果，精细化视觉呈现，提升整体页面美观度。
 
 **改动要点：**
 
@@ -42,7 +42,7 @@ flowchart LR
 
 ## 2. 交互体验优化
 
-调整智能体输出内容 **点击逻辑**，新增 **链接新标签页打开** 功能，优化操作体验。
+在 TypeScript 消息渲染组件中调整智能体输出内容的 **点击逻辑**，新增 **链接新标签页打开** 功能，优化操作体验。
 
 ```mermaid
 sequenceDiagram
@@ -64,7 +64,7 @@ sequenceDiagram
 
 ## 3. 功能逻辑优化
 
-关闭左侧侧边栏 **折叠/展开状态的浏览器本地记忆功能**，重置默认展示逻辑。
+移除 TypeScript 侧对侧边栏折叠状态的 **localStorage** 读写逻辑，关闭浏览器本地记忆功能，重置默认展示逻辑。
 
 ```mermaid
 flowchart TB
@@ -85,7 +85,7 @@ flowchart TB
 
 ## 4. 响应式适配优化
 
-整改 **PC 端、移动端** 适配逻辑，完善响应式布局，提升多终端浏览兼容性。
+在 TypeScript 响应式布局与 CSS 断点策略基础上，整改 **PC 端、移动端** 适配逻辑，完善多终端浏览兼容性。
 
 ```mermaid
 flowchart TB
@@ -110,7 +110,7 @@ flowchart TB
 
 ## 5. 加载体验优化
 
-修复 **对话刷新时内容闪烁** 问题，优化页面加载效果，提升用户使用质感。
+优化 TypeScript 会话页数据加载时序，修复 **对话刷新时内容闪烁** 问题，提升页面加载质感。
 
 ```mermaid
 sequenceDiagram
@@ -132,22 +132,22 @@ sequenceDiagram
 
 ## 6. 后端对接优化
 
-将不同智能体返回的 **数据结构统一转换** 为前端对应适配结构，降低前端分支判断成本。
+在 **agent_python（Python / FastAPI）** 侧新增统一适配层，将不同智能体返回结构转换为 **TypeScript 前端** 约定的消息块类型，降低 chat_vue3 分支判断成本。
 
 ```mermaid
 flowchart LR
-  A1["财务智能体"] --> Adapter["统一适配层"]
-  A2["市场洞察"] --> Adapter
-  A3["其他智能体"] --> Adapter
-  Adapter --> Schema["前端标准消息结构"]
+  A1["财务智能体 Python"] --> Adapter["Python 统一适配层"]
+  A2["市场洞察 Python"] --> Adapter
+  A3["其他智能体 Python"] --> Adapter
+  Adapter --> Schema["TypeScript 消息类型"]
   Schema --> FE["chat_vue3 渲染"]
 ```
 
 | 能力 | 说明 |
 |------|------|
-| 入参归一 | 各智能体原始响应格式各异 |
-| 出参统一 | 转换为前端约定的消息块结构 |
-| 扩展性 | 新智能体接入仅需补充适配规则 |
+| Python 入参归一 | 各智能体原始响应格式各异 |
+| 结构出参统一 | 映射为前端 TypeScript 接口定义 |
+| 扩展性 | 新智能体接入仅需补充 Python 适配规则 |
 
 > 📷 截图占位：`./images/agent-adapter.png`
 
@@ -155,12 +155,12 @@ flowchart LR
 
 ## 7. 后端网关升级
 
-千寻平台网关统一将 **用户信息字段、消息、历史会话、会话 ID、是否联网** 等透传给下游智能体，已形成固定方案，保障智能体记忆等必要功能。
+**gateway_node（TypeScript）** 统一将用户信息字段、消息、历史会话、会话 ID、是否联网等透传给 **agent_python（Python）** 下游智能体，已形成固定方案，保障智能体记忆等必要功能。
 
 ```mermaid
 flowchart TB
-  FE["前端 chat_vue3"] --> GW["千寻 API Gateway"]
-  GW -->|"用户字段"| Agent["下游智能体"]
+  FE["chat_vue3 TypeScript"] --> GW["gateway_node TypeScript"]
+  GW -->|"用户字段"| Agent["agent_python Python"]
   GW -->|"消息内容"| Agent
   GW -->|"历史会话"| Agent
   GW -->|"会话 ID"| Agent
