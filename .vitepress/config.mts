@@ -6,8 +6,8 @@ const weeks = [
     {
         id: '2026-06-23',
         label: '2026-06-23 ~ 06-29',
-        title: '本周（待补充）',
-        hasContent: false,
+        title: '本周',
+        hasContent: true,
     },
     {
         id: '2026-06-16',

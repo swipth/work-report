@@ -8,11 +8,11 @@
 
 | 维度 | 关键词 | 技术栈 |
 |------|--------|--------|
-| 标准化 | 智能体 API 文档、流式 API 设计 | Python + TypeScript |
+| 标准化 | 智能体 API 文档、流式 API 设计 | Python / TypeScript |
 | 中间件 | Ragflow 文转智答重构 | Python |
-| 性能 | 响应 10.5s → 3s | Python · agent_python |
+| 性能 | 响应 10.5s → 3s | Python |
 | 运维 | 调度日志、ACR 镜像版本 | Python |
-| 发版 | 千寻 V1.0.0-Beta | TypeScript · as_vue3 / as_nest |
+| 发版 | 千寻 V1.0.0-Beta | TypeScript |
 
 ---
 
@@ -28,7 +28,7 @@
 
 ### 1.3 文转智答（Ragflow 中间件）重构
 
-重构 **agent_python** 文转智答（Ragflow 中间件）结构，补充 Python 技术文档、搭建公共代码仓，规范团队协作与代码复用。
+重构 **后端** 文转智答（Ragflow 中间件）结构，补充 Python 技术文档、搭建公共代码仓，规范团队协作与代码复用。
 
 ```mermaid
 flowchart TB
@@ -90,7 +90,7 @@ flowchart LR
 
 ### 3.1 智能体调度日志
 
-在 **agent_python** 新增智能体调度 **入参、响应、异常** 全链路日志（Python logging），实现问题快速溯源与故障定位。
+在 **后端** 新增智能体调度 **入参、响应、异常** 全链路日志（Python logging），实现问题快速溯源与故障定位。
 
 ```mermaid
 flowchart LR
@@ -141,17 +141,17 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    FE["as_vue3 TypeScript"] -->|"V1.0.0-Beta"| REL["Release"]
-    BE["as_nest TypeScript"] -->|"V1.0.0-Beta"| REL
-    AG["agent_python"] -->|"镜像同步"| REL
+    FE["前端"] -->|"V1.0.0-Beta"| REL["Release"]
+    BE["后端"] -->|"V1.0.0-Beta"| REL
+    AG["智能体服务"] -->|"镜像同步"| REL
     REL --> DEPLOY["生产部署"]
 ```
 
 | 组件 | 版本 | 语言 | 说明 |
 |------|------|------|------|
-| 前端 as_vue3 | V1.0.0-Beta | TypeScript | 前后端分离 |
-| 后端 as_nest | V1.0.0-Beta | TypeScript | API 同步发版 |
-| 智能体 agent_python | 同步 | Python | Docker 镜像 ACR 标记 |
+| 前端 | V1.0.0-Beta | TypeScript | 前后端分离 |
+| 后端 | V1.0.0-Beta | TypeScript | API 同步发版 |
+| 智能体服务 | 同步 | Python | Docker 镜像 ACR 标记 |
 
 > 📷 截图占位：`./images/release-v1-beta.png`
 

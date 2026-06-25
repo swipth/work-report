@@ -8,15 +8,15 @@
 
 | 维度 | 关键词 | 技术栈 |
 |------|--------|--------|
-| 工程化 | Vue/CLI → Vite，构建效率 +90% | TypeScript · chat_vue3 |
-| AI 智能体 | 财务 / 市场洞察 / 调价 V1 | Python · agent_python |
-| 安全架构 | 公网 IP → 内网调用 | TypeScript + Python 全链路 |
+| 工程化 | Vue/CLI → Vite，构建效率 +90% | TypeScript |
+| AI 智能体 | 财务 / 市场洞察 / 调价 V1 | Python |
+| 安全架构 | 公网 IP → 内网调用 | TypeScript / Python |
 
 ---
 
 ## 1. Web 前端架构工程升级
 
-完成 **chat_vue3（TypeScript）** 底层架构从 **Vue CLI** 迁移至 **Vite** 构建体系，完成工程化底层换代，大幅提升研发与部署效率。
+完成 **前端（TypeScript）** 底层架构从 **Vue CLI** 迁移至 **Vite** 构建体系，完成工程化底层换代，大幅提升研发与部署效率。
 
 ### 性能对比
 
@@ -70,7 +70,7 @@ flowchart LR
 
 ## 2. 多类 AI 智能体能力工程化落地
 
-持续推进 **agent_python（Python）** 多业务智能体接入，配合 **chat_vue3（TypeScript）** 交互工程优化，拓展平台 AI 业务场景覆盖。
+持续推进 **后端（Python）** 多业务智能体接入，配合 **前端（TypeScript）** 交互工程优化，拓展平台 AI 业务场景覆盖。
 
 ### 2.1 财务智能体 · 流式图片渲染
 
@@ -80,7 +80,7 @@ flowchart LR
 sequenceDiagram
     participant LLM as 大模型
     participant AG as 财务智能体 Python
-    participant FE as chat_vue3 TypeScript
+    participant FE as 前端
 
     LLM-->>AG: 流式返回含图片块
     AG-->>FE: SSE 事件序列
@@ -118,10 +118,10 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    GW["gateway_node TypeScript"] --> F["财务 Python"]
+    GW["网关"] --> F["财务 Python"]
     GW --> M["市场洞察 Python"]
     GW --> P["调价 V1 Python"]
-    F --> FE["chat_vue3 TypeScript"]
+    F --> FE["前端"]
     M --> FE
     P --> FE
 ```
@@ -139,12 +139,12 @@ flowchart LR
 ```mermaid
 flowchart TB
     subgraph net_before ["整改前 存在风险"]
-        S1["gateway_node TS"] -->|"公网 IP"| S2["agent_python"]
+        S1["网关"] -->|"公网 IP"| S2["后端"]
         S2 -->|"公网暴露"| Internet(("公网"))
     end
 
     subgraph net_after ["整改后 内网隔离"]
-        S3["gateway_node TS"] -->|"内网 VPC"| S4["agent_python"]
+        S3["网关"] -->|"内网 VPC"| S4["后端"]
         S4 -.->|"禁止直连"| Internet2(("公网"))
     end
 ```

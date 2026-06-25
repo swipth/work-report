@@ -8,19 +8,19 @@
 
 | 维度 | 关键词 | 技术栈 |
 |------|--------|--------|
-| 视觉 | 站点主题 UI 精细化 | TypeScript · chat_vue3 |
+| 视觉 | 站点主题 UI 精细化 | TypeScript |
 | 交互 | 链接新标签页打开 | TypeScript |
 | 功能 | 侧边栏状态记忆关闭 | TypeScript |
-| 适配 | PC 与移动端响应式 | TypeScript · Vue3 |
+| 适配 | PC 与移动端响应式 | TypeScript |
 | 体验 | 对话刷新防闪烁 | TypeScript |
-| 后端 | 智能体数据结构统一适配 | Python · agent_python |
-| 网关 | 用户与会话上下文透传 | TypeScript · gateway_node |
+| 后端 | 智能体数据结构统一适配 | Python |
+| 网关 | 用户与会话上下文透传 | TypeScript |
 
 ---
 
 ## 1. 界面样式优化
 
-迭代 **chat_vue3（TypeScript + Vue3）** 站点主题 UI 展示效果，精细化视觉呈现，提升整体页面美观度。
+迭代 **前端（TypeScript + Vue3）** 站点主题 UI 展示效果，精细化视觉呈现，提升整体页面美观度。
 
 **改动要点：**
 
@@ -132,15 +132,15 @@ sequenceDiagram
 
 ## 6. 后端对接优化
 
-在 **agent_python（Python / FastAPI）** 侧新增统一适配层，将不同智能体返回结构转换为 **TypeScript 前端** 约定的消息块类型，降低 chat_vue3 分支判断成本。
+在 **后端（Python / FastAPI）** 侧新增统一适配层，将不同智能体返回结构转换为 **前端** 约定的消息块类型，降低前端分支判断成本。
 
 ```mermaid
 flowchart LR
-  A1["财务智能体 Python"] --> Adapter["Python 统一适配层"]
-  A2["市场洞察 Python"] --> Adapter
-  A3["其他智能体 Python"] --> Adapter
-  Adapter --> Schema["TypeScript 消息类型"]
-  Schema --> FE["chat_vue3 渲染"]
+  A1["财务智能体"] --> Adapter["后端统一适配层"]
+  A2["市场洞察"] --> Adapter
+  A3["其他智能体"] --> Adapter
+  Adapter --> Schema["消息类型"]
+  Schema --> FE["前端渲染"]
 ```
 
 | 能力 | 说明 |
@@ -155,12 +155,12 @@ flowchart LR
 
 ## 7. 后端网关升级
 
-**gateway_node（TypeScript）** 统一将用户信息字段、消息、历史会话、会话 ID、是否联网等透传给 **agent_python（Python）** 下游智能体，已形成固定方案，保障智能体记忆等必要功能。
+**网关（TypeScript）** 统一将用户信息字段、消息、历史会话、会话 ID、是否联网等透传给 **后端（Python）** 下游智能体，已形成固定方案，保障智能体记忆等必要功能。
 
 ```mermaid
 flowchart TB
-  FE["chat_vue3 TypeScript"] --> GW["gateway_node TypeScript"]
-  GW -->|"用户字段"| Agent["agent_python Python"]
+  FE["前端"] --> GW["网关"]
+  GW -->|"用户字段"| Agent["后端"]
   GW -->|"消息内容"| Agent
   GW -->|"历史会话"| Agent
   GW -->|"会话 ID"| Agent
