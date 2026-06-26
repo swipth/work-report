@@ -6,11 +6,11 @@
 
 ## 本周概览
 
-| 维度 | 关键词 | 技术栈 |
-|------|--------|--------|
-| 工程化 | Vue/CLI → Vite，构建效率 +90% | TypeScript |
-| AI 智能体 | 财务 / 市场洞察 / 调价 V1 | Python |
-| 安全架构 | 公网 IP → 内网调用 | TypeScript / Python |
+| 维度 | 关键词 |
+|------|--------|
+| 工程化 | Vue/CLI → Vite，构建效率 +90% |
+| AI 智能体 | 财务 / 市场洞察 / 调价 V1 |
+| 安全架构 | 公网 IP → 内网调用 |
 
 ---
 
@@ -106,6 +106,18 @@ flowchart TB
     Viz --> User
 ```
 
+### 效果截图
+
+**工具调用过程可视化 — 微信公众号文章解析与推理链路：**
+
+![市场洞察智能体 — 工具调用过程可视化（微信文章读取、技能加载、思考中）](./images/market-insight-tools.png)
+
+**结构化总结输出 — 按模板生成行业洞察报告：**
+
+![市场洞察智能体 — 科伦博泰 ADC 管线结构化总结结果](./images/market-insight-summary.png)
+
+> 📷 左：智能体调用 `mcp_wechat_article_reader`、`read_skill`、`thinking` 等工具的全过程可视化；右：基于微信文章链接按模板输出的结构化市场洞察总结。
+
 ### 2.3 调价智能体 V1
 
 完成 **调价智能体 V1（Python）** 工程化接入，保障 TypeScript 前端内容正常、稳定渲染。
@@ -126,7 +138,7 @@ flowchart LR
     P --> FE
 ```
 
-> 📷 截图占位：`./images/finance-stream-img.png`、`./images/market-tool-viz.png`、`./images/price-agent-v1.png`
+> 📷 截图占位：`./images/finance-stream-img.png`、`./images/price-agent-v1.png`
 
 ---
 
@@ -191,7 +203,8 @@ flowchart TB
 | `vite-build-perf.png` | Vite 构建耗时对比 |
 | `vite-dev-startup.png` | 开发服务器启动 |
 | `finance-stream-img.png` | 财务智能体流式图片 |
-| `market-tool-viz.png` | 市场洞察工具调用可视化 |
+| `market-insight-tools.png` | 市场洞察 — 工具调用过程可视化 |
+| `market-insight-summary.png` | 市场洞察 — 结构化总结输出 |
 | `price-agent-v1.png` | 调价智能体 V1 界面 |
 | `security-network-before.png` | 整改前网络拓扑 |
 | `security-network-after.png` | 整改后内网架构 |
