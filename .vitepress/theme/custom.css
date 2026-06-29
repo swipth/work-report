@@ -2,3 +2,112 @@
 .vp-doc img {
     cursor: zoom-in;
 }
+
+/* Mermaid 图表：可点击全屏预览 */
+.vp-doc .mermaid.mermaid-zoomable {
+    cursor: zoom-in;
+    overflow: auto;
+    padding: 8px 0;
+}
+
+.vp-doc .mermaid.mermaid-zoomable:hover {
+    outline: 1px dashed rgba(37, 99, 235, 0.35);
+    outline-offset: 4px;
+    border-radius: 8px;
+}
+
+body.mermaid-preview-open {
+    overflow: hidden;
+}
+
+.mermaid-preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+}
+
+.mermaid-preview-overlay.is-open {
+    display: block;
+}
+
+.mermaid-preview-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.72);
+}
+
+.mermaid-preview-panel {
+    position: absolute;
+    inset: 24px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+    overflow: hidden;
+}
+
+.mermaid-preview-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: #f8fafc;
+}
+
+.mermaid-preview-toolbar button {
+    min-width: 36px;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    background: #fff;
+    color: #334155;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.mermaid-preview-toolbar button:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+.mermaid-preview-viewport {
+    flex: 1;
+    overflow: auto;
+    background: #fff;
+}
+
+.mermaid-preview-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    min-height: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.mermaid-preview-scaler {
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.mermaid-preview-content {
+    transform-origin: top left;
+}
+
+.mermaid-preview-content svg {
+    display: block;
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+}
+
+@media (max-width: 640px) {
+    .mermaid-preview-panel {
+        inset: 12px;
+    }
+}
