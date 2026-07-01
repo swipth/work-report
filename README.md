@@ -1,6 +1,6 @@
-# 工作周报（VitePress）
+# 工作汇报（VitePress）
 
-基于 Markdown 的每周工作汇报站点，按时间节点归档，支持 Mermaid 架构图与截图补充。
+基于 Markdown 的每周 / 每月工作汇报站点，按时间节点归档，支持 Mermaid 架构图与截图补充。
 
 ## 快速开始
 
@@ -18,6 +18,10 @@ npm run dev
 work-report/
 ├── index.md                 # 首页与时间轴
 ├── reports/
+│   ├── monthly/
+│   │   └── 2026-06/         # 月报（YYYY-MM）
+│   │       ├── index.md
+│   │       └── images/
 │   ├── 2026-06-01/          # 上三周
 │   │   ├── index.md
 │   │   └── images/          # 截图目录
@@ -35,9 +39,17 @@ work-report/
 3. 在 `.vitepress/config.mts` 的 `weeks` 数组顶部追加新周配置
 4. 将截图放入对应 `images/` 目录，并在 Markdown 中引用：`![说明](./images/xxx.png)`
 
+## 新增一月月报
+
+1. 创建 `reports/monthly/YYYY-MM/index.md`（如 `2026-07`）
+2. 按五大维度汇总当月工作，可链至各周周报详情
+3. 在 `.vitepress/config.mts` 的 `months` 数组顶部追加配置
+4. 月报可复用各周 `images/`，或放入 `reports/monthly/YYYY-MM/images/`
+
 ## 编写规范
 
 - **周报周期**：每周 **周一 ~ 周日**，目录名取当周周一日期（如 `2026-06-22`）
+- **月报周期**：自然月，目录名 `reports/monthly/YYYY-MM`
 - **命名规范**：正文与架构图中统一使用「前端」「后端」「网关」，不使用具体仓库或项目名
 - **数据来源**：涉及业务数据接入、字段表、外部数据链路时，须用 `::: warning 📌 数据来源` 标注 **数据由数据部门提供**
 - **图片预览**：正文 `![说明](./images/xxx.png)` 支持点击放大（`vitepress-plugin-image-viewer`），同页多图可左右切换
@@ -45,7 +57,7 @@ work-report/
 
 ## 截图说明
 
-各周 Markdown 中已标注建议文件名，将截图放入对应 `images/` 文件夹即可；页面内使用相对路径引用。
+各周 / 月 Markdown 中已标注建议文件名，将截图放入对应 `images/` 文件夹即可；页面内使用相对路径引用。月报可跨周引用：`../../2026-06-15/images/xxx.png`
 
 ## 构建
 

@@ -1,3 +1,15 @@
+/* 首页 Hero：标题不换行，避免「千寻平台」被拆开 */
+.VPHero .text {
+    white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+    .VPHero .text {
+        font-size: clamp(1.35rem, 5.2vw, 2rem);
+        letter-spacing: -0.02em;
+    }
+}
+
 /* 周报正文图片：悬停显示可放大光标 */
 .vp-doc img {
     cursor: zoom-in;

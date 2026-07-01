@@ -1,6 +1,16 @@
 import {defineConfig} from 'vitepress'
 import {withMermaid} from 'vitepress-plugin-mermaid'
 
+/** 月报归档 */
+const months = [
+    {
+        id: '2026-06',
+        label: '2026 年 6 月',
+        title: '最新月报',
+        hasContent: true,
+    },
+]
+
 /** 周报时间轴：按周倒序，首页默认跳转最新有内容的周报 */
 const weeks = [
     {
@@ -35,12 +45,13 @@ const weeks = [
     },
 ]
 
+const latestMonth = months.find((m) => m.hasContent) ?? months[0]
 const latestWeek = weeks.find((w) => w.hasContent) ?? weeks[0]
 
 export default withMermaid(
     defineConfig({
-        title: '工作周报',
-        description: '基于 VitePress 的每周工作汇报',
+        title: '工作汇报',
+        description: '基于 VitePress 的每周 / 每月工作汇报',
         lang: 'zh-CN',
         cleanUrls: true,
         lastUpdated: true,
@@ -48,10 +59,18 @@ export default withMermaid(
         themeConfig: {
             nav: [
                 {text: '首页', link: '/'},
+                {text: '最新月报', link: `/reports/monthly/${latestMonth.id}/`},
                 {text: '最新周报', link: `/reports/${latestWeek.id}/`},
             ],
 
             sidebar: [
+                {
+                    text: '月报归档',
+                    items: months.map((m) => ({
+                        text: `${m.label} · ${m.title}`,
+                        link: `/reports/monthly/${m.id}/`,
+                    })),
+                },
                 {
                     text: '周报归档',
                     items: weeks.map((w) => ({
@@ -64,7 +83,7 @@ export default withMermaid(
             outline: {level: [2, 3]},
             socialLinks: [],
             footer: {
-                message: '千寻平台 · 工作周报',
+                message: '药石智能操作系统 · 工作汇报',
                 copyright: 'Copyright © 2026',
             },
         },
